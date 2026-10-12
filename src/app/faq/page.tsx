@@ -1,7 +1,8 @@
 import { BackLink, PageHeader, StillStuck } from "@/components/ui";
-import { faqs } from "@/data/house";
+import { getContent } from "@/lib/content";
 
-export default function FaqPage() {
+export default async function FaqPage() {
+  const { faqs } = await getContent();
   return (
     <div>
       <BackLink />

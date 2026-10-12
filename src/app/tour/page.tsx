@@ -1,7 +1,8 @@
 import { BackLink, NavCard, PageHeader } from "@/components/ui";
-import { tourStops } from "@/data/house";
+import { getContent } from "@/lib/content";
 
-export default function TourOverview() {
+export default async function TourOverview() {
+  const { tourStops } = await getContent();
   return (
     <div>
       <BackLink />

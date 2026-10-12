@@ -1,7 +1,8 @@
 import { BackLink, PageHeader, Section, StillStuck } from "@/components/ui";
-import { essentials, host } from "@/data/house";
+import { getContent } from "@/lib/content";
 
-export default function EssentialsPage() {
+export default async function EssentialsPage() {
+  const { essentials, host } = await getContent();
   return (
     <div>
       <BackLink />

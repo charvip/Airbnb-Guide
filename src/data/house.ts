@@ -1,5 +1,6 @@
-// All guest-facing content lives here. Pages read from this file,
-// so updating the guide means editing data, not page code.
+// Default guide content. This is the starting point the first time the site
+// runs; after that, hosts edit it from /host and the saved copy lives in
+// Vercel Blob (see src/lib/content.ts).
 // Anything wrapped in [ADD: ...] still needs the host's real details.
 
 export type Appliance = {
@@ -12,6 +13,7 @@ export type Appliance = {
   steps: string[];
   troubleshooting?: string[];
   tips?: string[];
+  photos?: string[];
 };
 
 export type TourStop = {
@@ -21,6 +23,7 @@ export type TourStop = {
   summary: string;
   details: string[];
   applianceIds: string[];
+  photos?: string[];
 };
 
 export type Activity = {
@@ -30,6 +33,7 @@ export type Activity = {
   summary: string;
   details: string[];
   applianceId?: string;
+  photos?: string[];
 };
 
 export type Faq = { question: string; answer: string };
@@ -55,8 +59,8 @@ export const essentials = {
     instructions: "Your code is active from 3:00 PM on your arrival day. Enter the code on the keypad, then turn the handle.",
   },
   wifi: {
-    network: process.env.WIFI_NETWORK ?? "[ADD: WIFI_NETWORK in Vercel settings]",
-    password: process.env.WIFI_PASSWORD ?? "[ADD: WIFI_PASSWORD in Vercel settings]",
+    network: "[ADD: WiFi network name]",
+    password: "[ADD: WiFi password]",
   },
   checkoutTime: "11:00 AM",
   checkoutChecklist: [
@@ -172,7 +176,6 @@ export const tourStops: TourStop[] = [
     emoji: "🚗",
     summary: "Welcome! Here's where to park and how to get inside.",
     details: [
-      essentials.parking,
       "Your door code is active from 3:00 PM on your arrival day. Find it in the Essentials section of this guide.",
     ],
     applianceIds: [],
@@ -206,7 +209,7 @@ export const tourStops: TourStop[] = [
     title: "Checking Out",
     emoji: "👋",
     summary: "Checkout is at 11:00 AM. A few quick steps before you go:",
-    details: essentials.checkoutChecklist,
+    details: [],
     applianceIds: ["washer-dryer"],
   },
 ];
@@ -287,6 +290,6 @@ export const faqs: Faq[] = [
   },
 ];
 
-export const getAppliance = (id: string) => appliances.find((a) => a.id === id);
-export const getStop = (id: string) => tourStops.find((s) => s.id === id);
-export const getActivity = (id: string) => activities.find((a) => a.id === id);
+export const defaultContent = { house, host, essentials, appliances, tourStops, activities, faqs };
+
+export type SiteContent = typeof defaultContent;

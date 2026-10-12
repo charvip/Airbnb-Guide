@@ -1,20 +1,18 @@
 import { notFound } from "next/navigation";
-import { BackLink, PageHeader, Section, StillStuck } from "@/components/ui";
-import { appliances, getAppliance } from "@/data/house";
-
-export function generateStaticParams() {
-  return appliances.map((a) => ({ id: a.id }));
-}
+import { BackLink, PageHeader, Photos, Section, StillStuck } from "@/components/ui";
+import { getContent } from "@/lib/content";
 
 export default async function AppliancePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const appliance = getAppliance(id);
+  const { appliances } = await getContent();
+  const appliance = appliances.find((a) => a.id === id);
   if (!appliance) notFound();
 
   return (
     <div>
       <BackLink href="/appliances" label="All devices" />
       <PageHeader emoji={appliance.emoji} title={appliance.name} subtitle={appliance.summary} />
+      <Photos urls={appliance.photos} alt={appliance.name} />
 
       <Section title="📍 Where to find it">
         <dl className="space-y-3">

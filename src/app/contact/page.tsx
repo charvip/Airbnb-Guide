@@ -1,9 +1,10 @@
 import { BackLink, PageHeader, Section } from "@/components/ui";
-import { host } from "@/data/house";
+import { getContent } from "@/lib/content";
 
 const isFilledIn = (value: string) => !value.startsWith("[ADD");
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const { host } = await getContent();
   return (
     <div>
       <BackLink />

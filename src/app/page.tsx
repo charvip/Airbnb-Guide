@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { NavCard } from "@/components/ui";
-import { house } from "@/data/house";
+import { getContent } from "@/lib/content";
 
-export default function Home() {
+export default async function Home() {
+  const { house } = await getContent();
   return (
     <div className="space-y-8">
       <header className="space-y-3 pt-4 text-center">
@@ -25,6 +26,12 @@ export default function Home() {
         <NavCard href="/faq" emoji="❓" title="FAQ" subtitle="Quick answers to common questions" />
         <NavCard href="/contact" emoji="📞" title="Contact the Host" />
       </nav>
+
+      <footer className="pt-6 text-center">
+        <Link href="/host" className="text-sm text-stone-500 hover:underline">
+          Host login
+        </Link>
+      </footer>
     </div>
   );
 }

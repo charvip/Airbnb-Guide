@@ -45,6 +45,19 @@ export function Section({ title, children }: { title: string; children: React.Re
   );
 }
 
+export function Photos({ urls, alt }: { urls?: string[]; alt: string }) {
+  if (!urls || urls.length === 0) return null;
+  return (
+    <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
+      {urls.map((url, i) => (
+        // Plain <img>: photos are host uploads on Vercel Blob, already web-sized.
+        // eslint-disable-next-line @next/next/no-img-element
+        <img key={url} src={url} alt={`${alt} photo ${i + 1}`} className="w-full rounded-2xl border border-stone-200 object-cover" />
+      ))}
+    </div>
+  );
+}
+
 export function StillStuck() {
   return (
     <div className="mt-10 text-center">

@@ -1,22 +1,20 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { BackLink, NavCard, PageHeader, Section, StillStuck } from "@/components/ui";
-import { getAppliance, getStop, tourStops } from "@/data/house";
-
-// Pre-render one page per tour stop at build time.
-export function generateStaticParams() {
-  return tourStops.map((s) => ({ stop: s.id }));
-}
+import { BackLink, NavCard, PageHeader, Photos, Section, StillStuck } from "@/components/ui";
+import { getContent } from "@/lib/content";
 
 export default async function TourStopPage({ params }: { params: Promise<{ stop: string }> }) {
   const { stop: stopId } = await params;
-  const stop = getStop(stopId);
+  const { tourStops, appliances, essentials } = await getContent();
+  const index = tourStops.findIndex((s) => s.id === stopId);
+  const stop = tourStops[index];
   if (!stop) notFound();
 
-  const index = tourStops.findIndex((s) => s.id === stop.id);
   const prev = tourStops[index - 1];
   const next = tourStops[index + 1];
-  const stopAppliances = stop.applianceIds.map(getAppliance).filter((a) => a !== undefined);
+  const stopAppliances = stop.applianceIds
+    .map((id) => appliances.find((a) => a.id === id))
+    .filter((a) => a !== undefined);
 
   return (
     <div>
@@ -25,12 +23,30 @@ export default async function TourStopPage({ params }: { params: Promise<{ stop:
         Stop {index + 1} of {tourStops.length}
       </p>
       <PageHeader emoji={stop.emoji} title={stop.title} subtitle={stop.summary} />
+      <Photos urls={stop.photos} alt={stop.title} />
+
+      {/* Parking and checkout come from Essentials so they're only edited in one place. */}
+      {stop.id === "arrival" && (
+        <Section title="🚗 Where to park">
+          <p>{essentials.parking}</p>
+        </Section>
+      )}
 
       {stop.details.length > 0 && (
-        <Section title={stop.id === "checkout" ? "Checkout checklist" : "Good to know"}>
+        <Section title="Good to know">
           <ul className="list-disc space-y-2 pl-5">
             {stop.details.map((d) => (
               <li key={d}>{d}</li>
+            ))}
+          </ul>
+        </Section>
+      )}
+
+      {stop.id === "checkout" && (
+        <Section title={`Checkout by ${essentials.checkoutTime}`}>
+          <ul className="list-disc space-y-2 pl-5">
+            {essentials.checkoutChecklist.map((item) => (
+              <li key={item}>{item}</li>
             ))}
           </ul>
         </Section>

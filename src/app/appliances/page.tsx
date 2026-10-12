@@ -1,7 +1,8 @@
 import { BackLink, NavCard, PageHeader } from "@/components/ui";
-import { appliances } from "@/data/house";
+import { getContent } from "@/lib/content";
 
-export default function AppliancesPage() {
+export default async function AppliancesPage() {
+  const { appliances } = await getContent();
   return (
     <div>
       <BackLink />
