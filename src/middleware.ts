@@ -1,26 +1,38 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-// Protects the Essentials page (door code, WiFi password) behind a guest passcode.
-// The passcode lives in the GUEST_CODE environment variable (set it in Vercel),
-// so it never appears in the public GitHub repo.
-// If GUEST_CODE isn't set, the page stays open (handy for local development).
-
-export const ACCESS_COOKIE = "guest_access";
+// Two gates:
+// 1. /essentials (door code, WiFi) needs the guest passcode in GUEST_CODE.
+//    If GUEST_CODE isn't set, the page stays open.
+// 2. /host (the editor) needs the host password in HOST_PASSWORD.
+//    If HOST_PASSWORD isn't set, the host side stays locked.
+// Both values live in Vercel environment variables, never in the repo.
 
 export function middleware(request: NextRequest) {
-  const code = process.env.GUEST_CODE;
-  if (!code) return NextResponse.next();
+  const { pathname } = request.nextUrl;
 
-  if (request.cookies.get(ACCESS_COOKIE)?.value === code) {
-    return NextResponse.next();
+  if (pathname.startsWith("/host")) {
+    if (pathname === "/host/login") return NextResponse.next();
+    const password = process.env.HOST_PASSWORD;
+    if (password && request.cookies.get("host_access")?.value === password) {
+      return NextResponse.next();
+    }
+    return redirectTo(request, "/host/login");
   }
 
+  const code = process.env.GUEST_CODE;
+  if (!code || request.cookies.get("guest_access")?.value === code) {
+    return NextResponse.next();
+  }
+  return redirectTo(request, "/unlock");
+}
+
+function redirectTo(request: NextRequest, path: string) {
   const url = request.nextUrl.clone();
-  url.pathname = "/unlock";
+  url.pathname = path;
   url.search = `?next=${encodeURIComponent(request.nextUrl.pathname)}`;
   return NextResponse.redirect(url);
 }
 
 export const config = {
-  matcher: ["/essentials/:path*"],
+  matcher: ["/essentials/:path*", "/host/:path*"],
 };
