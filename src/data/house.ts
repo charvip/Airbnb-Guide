@@ -47,13 +47,15 @@ export const host = {
 
 export const essentials = {
   parking: "[ADD: Where guests should park, e.g. driveway on the left, max 2 cars]",
+  // Secrets come from environment variables (set in Vercel), never from this
+  // file, because the GitHub repo is public.
   doorLock: {
-    code: "[ADD: Door code]",
+    code: process.env.DOOR_CODE ?? "[ADD: DOOR_CODE in Vercel settings]",
     instructions: "[ADD: How the lock works, e.g. press the logo, enter the code, then turn the handle]",
   },
   wifi: {
-    network: "[ADD: WiFi network name]",
-    password: "[ADD: WiFi password]",
+    network: process.env.WIFI_NETWORK ?? "[ADD: WIFI_NETWORK in Vercel settings]",
+    password: process.env.WIFI_PASSWORD ?? "[ADD: WIFI_PASSWORD in Vercel settings]",
   },
   checkoutTime: "11:00 AM",
   checkoutChecklist: [
