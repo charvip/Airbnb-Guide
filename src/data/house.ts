@@ -10,6 +10,7 @@ export type Appliance = {
   location: string;
   suppliesLocation: string;
   steps: string[];
+  troubleshooting?: string[];
   tips?: string[];
 };
 
@@ -39,19 +40,19 @@ export const house = {
 };
 
 export const host = {
-  name: "[ADD: Host name]",
-  phone: "[ADD: Host phone]",
-  email: "[ADD: Host email]",
+  // Demo details: fictional names, 555-01xx test number, example.com email.
+  name: "Maya & Sam Rivera",
+  phone: "(614) 555-0142",
+  email: "hosts@example.com",
   responseNote: "Text is the fastest way to reach me. For emergencies, call 911 first.",
 };
 
 export const essentials = {
   parking: "[ADD: Where guests should park, e.g. driveway on the left, max 2 cars]",
-  // Secrets come from environment variables (set in Vercel), never from this
-  // file, because the GitHub repo is public.
+  // Demo code. Real codes should be entered through the host side, not committed here.
   doorLock: {
-    code: process.env.DOOR_CODE ?? "[ADD: DOOR_CODE in Vercel settings]",
-    instructions: "[ADD: How the lock works, e.g. press the logo, enter the code, then turn the handle]",
+    code: "7381",
+    instructions: "Your code is active from 3:00 PM on your arrival day. Enter the code on the keypad, then turn the handle.",
   },
   wifi: {
     network: process.env.WIFI_NETWORK ?? "[ADD: WIFI_NETWORK in Vercel settings]",
@@ -86,13 +87,15 @@ export const appliances: Appliance[] = [
     id: "fireplace",
     name: "Fireplace",
     emoji: "🔥",
-    summary: "A cozy fireplace for cool evenings.",
-    location: "Living room — [ADD: exact spot]",
-    suppliesLocation: "[ADD: Where the wood, lighter, remote, or switch is kept]",
+    summary: "A cozy gas fireplace for cool evenings.",
+    location: "Living room",
+    suppliesLocation: "The brass valve is to the left of the hearth. The flame is set with the wall dial.",
     steps: [
-      "[ADD: Step-by-step instructions to turn on the fireplace for this specific fireplace (gas or wood)]",
-      "[ADD: How to turn it off]",
+      "Turn the brass valve a quarter turn (it's to the left of the hearth).",
+      "Hold the ignite button for five seconds.",
+      "Set the flame with the wall dial. Close the valve when you are done.",
     ],
+    troubleshooting: ["No flame? Hold ignite a little longer, then check the wall switch is on."],
     tips: [
       "Never leave the fire unattended.",
       "Keep blankets, pillows, and decorations away from the fireplace.",
@@ -170,7 +173,7 @@ export const tourStops: TourStop[] = [
     summary: "Welcome! Here's where to park and how to get inside.",
     details: [
       essentials.parking,
-      "Find the door code in the Essentials section of this guide.",
+      "Your door code is active from 3:00 PM on your arrival day. Find it in the Essentials section of this guide.",
     ],
     applianceIds: [],
   },

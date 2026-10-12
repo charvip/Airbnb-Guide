@@ -37,6 +37,16 @@ export default async function AppliancePage({ params }: { params: Promise<{ id: 
         </ol>
       </Section>
 
+      {appliance.troubleshooting && appliance.troubleshooting.length > 0 && (
+        <Section title="🤔 If it does not work">
+          <ul className="list-disc space-y-2 pl-5">
+            {appliance.troubleshooting.map((t) => (
+              <li key={t}>{t}</li>
+            ))}
+          </ul>
+        </Section>
+      )}
+
       {appliance.tips && appliance.tips.length > 0 && (
         <Section title="💡 Good to know">
           <ul className="list-disc space-y-2 pl-5">
