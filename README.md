@@ -1,38 +1,45 @@
 # Airbnb Guest Guide
 
-A mobile-first guest guide for an Airbnb: a room-by-room tour, appliance how-tos (with where each appliance and its supplies live), house essentials, FAQs and activities.
+A mobile-first guest guide for an Airbnb, with a **guest side** (room-by-room tour, appliance how-tos, essentials, activities, FAQ) and a password-protected **host side** for editing everything and uploading photos.
 
 ## Tech stack
-- Next.js (App Router) + TypeScript
+- Next.js (App Router, Server Actions) + TypeScript
 - Tailwind CSS
-- Deployed on Vercel (auto-deploys on every push to `main`)
+- Vercel hosting, with Vercel Blob for saved content and photos
 
-## Pages
+## Guest side
 | Route | What it shows |
 | --- | --- |
 | `/` | Home: start the tour, devices, essentials, activities, FAQ |
 | `/tour`, `/tour/[stop]` | Arrival → living room → kitchen → garden → checkout |
-| `/appliances`, `/appliances/[id]` | Device list, and per-device location, supplies and instructions |
-| `/essentials` | Door code, WiFi, parking, checkout, quiet hours, host (passcode-protected) |
-| `/activities` | Hike, bonfire, yoga, board games, hot tub |
-| `/faq` | Common questions |
-| `/contact` | Host contact (every "Still stuck?" button links here) |
+| `/appliances`, `/appliances/[id]` | Where each device and its supplies are, steps, troubleshooting, photos |
+| `/essentials` | Door code, WiFi, parking, checkout, quiet hours (optional guest passcode) |
+| `/activities`, `/faq`, `/contact` | Things to do, common questions, host contact |
 
-## Editing content
-All content lives in `src/data/house.ts`. Replace each `[ADD: ...]` placeholder with real details. Adding a device or tour stop is just a new entry in that file.
+## Host side
+Sign in at `/host` (link at the bottom of the home page) with `HOST_PASSWORD`. Hosts can:
+- Edit essentials, host contact, the welcome message and FAQ
+- Edit each tour stop and choose which devices appear on it
+- Add, edit and delete devices and activities
+- Upload, reorder and remove photos
 
-## Secrets
-The door code and WiFi details are **not** stored in the repo. Set these in Vercel → Project → Settings → Environment Variables, then redeploy:
+Edits show up for guests immediately.
 
-- `GUEST_CODE`: passcode guests enter to see Essentials
-- `DOOR_CODE`, `WIFI_NETWORK`, `WIFI_PASSWORD`
+## How saving works
+Vercel servers can't write to disk, so each save writes the full content as a new JSON file in Vercel Blob, and pages read the newest one (the last 10 versions are kept). Photos upload straight from the browser to Blob with a short-lived token only signed-in hosts can get. `src/data/house.ts` holds the starting content used before anything is saved.
 
-See `.env.example`. If `GUEST_CODE` is unset, Essentials is open.
+## Setup on Vercel
+1. **Storage → Create → Blob**, and connect it to this project (adds `BLOB_READ_WRITE_TOKEN`).
+2. **Settings → Environment Variables**: add `HOST_PASSWORD`, and optionally `GUEST_CODE`.
+3. Redeploy.
+
+## Demo data
+The host names, phone number (555-01xx test range), email (example.com) and door code in the default content are fictional.
 
 ## Run locally
 ```bash
-cp .env.example .env.local
+cp .env.example .env.local   # fill in the values
 npm install
 npm run dev
 ```
-Then open http://localhost:3000.
+Then open http://localhost:3000. Without `BLOB_READ_WRITE_TOKEN` the site shows the default content and saving is disabled.
