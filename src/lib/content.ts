@@ -20,7 +20,11 @@ import { defaultContent, type SiteContent } from "@/data/house";
 
 const PREFIX = "content/site-";
 
-export const storageConnected = () => Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+// Vercel now connects Blob stores with short-lived OIDC credentials
+// (BLOB_STORE_ID + a token Vercel rotates automatically); older connections
+// use a static BLOB_READ_WRITE_TOKEN. The SDK handles both.
+export const storageConnected = () =>
+  Boolean(process.env.BLOB_STORE_ID || process.env.BLOB_READ_WRITE_TOKEN);
 
 async function newestContentBlobs() {
   const { blobs } = await list({ prefix: PREFIX });

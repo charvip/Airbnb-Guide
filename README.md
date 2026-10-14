@@ -26,10 +26,10 @@ Sign in at `/host` (link at the bottom of the home page) with `HOST_PASSWORD`. H
 Edits show up for guests immediately.
 
 ## How saving works
-Vercel servers can't write to disk, so each save writes the full content as a new JSON file in Vercel Blob, and pages read the newest one (the last 10 versions are kept). Photos upload straight from the browser to Blob with a short-lived token only signed-in hosts can get. `src/data/house.ts` holds the starting content used before anything is saved.
+Vercel servers can't write to disk, so each save writes the full content as a new JSON file in Vercel Blob, and pages read the newest one (the last 10 versions are kept). Photos upload straight from the browser to Blob through short-lived presigned URLs that only signed-in hosts can get. `src/data/house.ts` holds the starting content used before anything is saved.
 
 ## Setup on Vercel
-1. **Storage → Create → Blob**, and connect it to this project (adds `BLOB_READ_WRITE_TOKEN`).
+1. **Storage → Create → Blob** (access: **Public**), and connect it to this project. Vercel adds `BLOB_STORE_ID` and `BLOB_WEBHOOK_PUBLIC_KEY` and authenticates with rotating OIDC tokens; older connections with `BLOB_READ_WRITE_TOKEN` also work.
 2. **Settings → Environment Variables**: add `HOST_PASSWORD`, and optionally `GUEST_CODE`.
 3. Redeploy.
 
@@ -42,4 +42,4 @@ cp .env.example .env.local   # fill in the values
 npm install
 npm run dev
 ```
-Then open http://localhost:3000. Without `BLOB_READ_WRITE_TOKEN` the site shows the default content and saving is disabled.
+Then open http://localhost:3000. Without Blob credentials (`vercel env pull`) the site shows the default content and saving is disabled.

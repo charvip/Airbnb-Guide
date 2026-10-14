@@ -1,6 +1,6 @@
 "use client";
 
-import { upload } from "@vercel/blob/client";
+import { uploadPresigned } from "@vercel/blob/client";
 import { useState } from "react";
 
 // Photo manager inside a host edit form. Uploads go straight to Vercel Blob;
@@ -17,7 +17,7 @@ export function PhotoField({ photos: initial }: { photos?: string[] }) {
     setError("");
     try {
       for (const file of Array.from(files)) {
-        const blob = await upload(`photos/${file.name}`, file, {
+        const blob = await uploadPresigned(`photos/${file.name}`, file, {
           access: "public",
           handleUploadUrl: "/api/upload",
         });
