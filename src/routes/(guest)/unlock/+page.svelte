@@ -1,13 +1,11 @@
 <script lang="ts">
-	import { BackLink, PageHeader, PasswordGate } from '#lib/components/app/index.js';
+	import { PageHeader, PasswordGate } from '#lib/components/app/index.js';
 	import type { PageProps } from './$types';
 
 	let { data, form }: PageProps = $props();
 </script>
 
-<BackLink />
 <PageHeader
-	emoji="🔒"
 	title="Guest access"
 	subtitle="Enter the guest passcode from your Airbnb booking messages to see the door code and WiFi."
 />

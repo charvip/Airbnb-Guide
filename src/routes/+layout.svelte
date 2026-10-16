@@ -13,6 +13,6 @@
 	/>
 </svelte:head>
 
-<main class="mx-auto max-w-page px-4 py-8">
+<main class="mx-auto max-w-page px-5 pt-10 pb-12">
 	{@render children()}
 </main>

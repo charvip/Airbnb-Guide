@@ -9,7 +9,6 @@
 
 <BackLink label="Guest guide" />
 <PageHeader
-	emoji="🔐"
 	title="Host login"
 	subtitle="Sign in to edit the guide, add instructions and upload photos."
 />

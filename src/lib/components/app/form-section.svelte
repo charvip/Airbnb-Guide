@@ -1,21 +1,15 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import * as Card from '#lib/components/ui/card/index.js';
 	import * as Field from '#lib/components/ui/field/index.js';
+	import Panel from './panel.svelte';
 
-	// A card grouping related fields in a host editor form.
+	// A panel grouping related fields in a host editor form.
 	let { title, children }: { title?: string; children: Snippet } = $props();
 </script>
 
-<Card.Root>
-	{#if title}
-		<Card.Header>
-			<Card.Title class="font-semibold">{title}</Card.Title>
-		</Card.Header>
-	{/if}
-	<Card.Content>
-		<Field.Group class="gap-5">
-			{@render children()}
-		</Field.Group>
-	</Card.Content>
-</Card.Root>
+<Panel class="gap-5">
+	{#if title}<h2 class="text-base font-semibold">{title}</h2>{/if}
+	<Field.Group class="gap-5">
+		{@render children()}
+	</Field.Group>
+</Panel>

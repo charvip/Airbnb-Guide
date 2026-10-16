@@ -29,7 +29,7 @@
 		<TextField label="Phone" name="hostPhone" value={host.phone} />
 		<TextField label="Email" name="hostEmail" value={host.email} />
 		<TextAreaField
-			label="Note shown on the contact page"
+			label="Note shown on the Help page"
 			name="responseNote"
 			value={host.responseNote}
 			rows={2}
@@ -50,6 +50,12 @@
 
 	<FormSection title="Stay details">
 		<TextAreaField label="Parking" name="parking" value={essentials.parking} rows={2} />
+		<TextField
+			label="Check-in time"
+			name="checkInTime"
+			value={essentials.checkInTime ?? ''}
+			hint="Shown on the home screen."
+		/>
 		<TextField label="Checkout time" name="checkoutTime" value={essentials.checkoutTime} />
 		<LinesField
 			label="Checkout checklist"

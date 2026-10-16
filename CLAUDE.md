@@ -75,13 +75,22 @@ review any changes it made to `tokens.css` so the warm palette below survives.
 
 ### Tokens (summary; see `tokens.css`)
 
-- Surfaces: `background` (warm cream), `card` (white), `foreground` (warm near-black)
-- Brand: `primary` (deep emerald) / `primary-foreground`; `secondary` (emerald-50) / `secondary-foreground`
-- Neutrals: `muted`, `muted-foreground`, `accent`, `border`, `input`, `ring`
+- Surfaces: `background` (warm blush), `card` (white, the `Panel` surface), `foreground` (warm near-black)
+- Brand: `primary` (terracotta) / `primary-foreground`; `secondary` (terracotta tint) / `secondary-foreground`
+- Neutrals: `muted`, `muted-foreground`, `accent` (hover tint), `border`, `input`, `ring`
 - Status: `destructive`, `success` / `success-foreground`, `warning` / `warning-foreground`
-- Radius: `--radius` (0.875rem) → `rounded-sm … rounded-4xl`
+- Radius: `--radius` (0.875rem) → `rounded-sm … rounded-4xl`; panels use `rounded-xl`, the feature card `rounded-2xl`
 - Font: Figtree (`font-sans`)
-- Layout: `max-w-page` (36rem, the single phone-width column)
+- Layout: `max-w-page` (36rem, the single phone-width column); `pb-safe` (bottom safe-area inset, for fixed bars)
+- Every colour token has a matching `.dark` value.
+
+### Look and layout
+
+Guest pages live in the `src/routes/(guest)` group, whose layout adds the bottom `TabBar` (Home, Tour,
+Essentials, Help). Pages stack flat white `Panel`s on the blush background with `gap-3`; there are no
+shadows or outlines. UI icons are Lucide line icons in `text-primary` at `strokeWidth={1.75}`; emoji
+are only for host content (device, activity and tour-stop emoji). One bold `FeatureCard` per screen at
+most.
 
 ### Component inventory
 
@@ -91,28 +100,35 @@ separator, textarea.
 
 **App components (`#lib/components/app/index.js`):**
 
-| Component                                                 | Use for                                                               |
-| --------------------------------------------------------- | --------------------------------------------------------------------- |
-| `PageHeader`                                              | Page title with optional emoji, eyebrow, subtitle, centring           |
-| `BackLink`                                                | "← Home"-style link at the top of a page                              |
-| `NavCard`                                                 | Tappable row linking to another page (emoji, title, summary, chevron) |
-| `SectionCard`                                             | Titled content card on guest pages                                    |
-| `TextList`                                                | Bulleted or numbered list of strings                                  |
-| `InfoList`                                                | Label/value pairs (WiFi network/password…)                            |
-| `CodeDisplay`                                             | A short code shown large (door code)                                  |
-| `PhotoGallery`                                            | Grid of host-uploaded photos                                          |
-| `ContactCta`                                              | "Still stuck? Contact the host" button                                |
-| `TourPager`                                               | Previous/next buttons between tour stops                              |
-| `PasswordGate`                                            | One-field password form (guest unlock, host login)                    |
-| `Emoji`                                                   | Decorative emoji icon (`sm`/`md`/`lg`)                                |
-| `HostHeader`                                              | Host editor page header with "Host mode" badge                        |
-| `FormNotice`                                              | Saved/error alert from a form action result                           |
-| `EditorForm`                                              | Host edit form (progressive enhancement, keeps values after save)     |
-| `FormSection`                                             | Card grouping related fields                                          |
-| `TextField`, `TextAreaField`, `LinesField`, `SelectField` | Labelled form fields (`LinesField` = one item per line)               |
-| `PhotoField`                                              | Upload/reorder/remove photos (direct-to-Blob uploads)                 |
-| `EditLink`                                                | Dashboard row that opens an editor                                    |
-| `AddItemForm`                                             | Inline "name + Add" create form                                       |
+| Component                                                 | Use for                                                              |
+| --------------------------------------------------------- | -------------------------------------------------------------------- |
+| `Panel`                                                   | Flat white card surface; the base of every grouped block             |
+| `ListGroup`                                               | Panel of rows separated by hairlines (holds `ListRow` / `EditLink`)  |
+| `TabBar`                                                  | Fixed bottom navigation for guest pages (in the `(guest)` layout)    |
+| `PageHeader`                                              | Page title with optional eyebrow, subtitle and content below         |
+| `BackLink`                                                | "← All devices"-style link at the top of a sub-page                  |
+| `FeatureCard`                                             | The one bold call to action on a screen (e.g. the house tour)        |
+| `NavTile`                                                 | Square icon shortcut for the home screen's 2-column grid             |
+| `StayTimes`                                               | Check-in / checkout times as pills                                   |
+| `ListRow`                                                 | Tappable row in a `ListGroup` (emoji, icon or number marker)         |
+| `SectionCard`                                             | Titled content panel with a Lucide icon (or content emoji) and aside |
+| `TextList`                                                | Numbered steps or dotted bullets                                     |
+| `InfoList`                                                | Label/value pairs                                                    |
+| `CodeDisplay`                                             | A short code shown large in a panel (door code)                      |
+| `WifiCard`                                                | WiFi network and password with a copy button                         |
+| `PhotoGallery`                                            | Grid of host-uploaded photos                                         |
+| `ContactCta`                                              | Quiet "Still stuck? Contact the host" line                           |
+| `TourPager`                                               | Previous/next buttons between tour stops                             |
+| `PasswordGate`                                            | One-field password form (guest unlock, host login)                   |
+| `Emoji`                                                   | Emoji from host content (`sm`/`md`/`lg`)                             |
+| `HostHeader`                                              | Host editor page header with "Host mode" badge                       |
+| `FormNotice`                                              | Saved/error alert from a form action result                          |
+| `EditorForm`                                              | Host edit form (progressive enhancement, keeps values after save)    |
+| `FormSection`                                             | Panel grouping related fields                                        |
+| `TextField`, `TextAreaField`, `LinesField`, `SelectField` | Labelled form fields (`LinesField` = one item per line)              |
+| `PhotoField`                                              | Upload/reorder/remove photos (direct-to-Blob uploads)                |
+| `EditLink`                                                | Dashboard row (in a `ListGroup`) that opens an editor                |
+| `AddItemForm`                                             | Inline "name + Add" create form                                      |
 
 ---
 
@@ -132,6 +148,8 @@ separator, textarea.
   are kept). Reads are cached with `getCache()` from `@vercel/functions` and invalidated by tag on
   save. **Don't remove the cache**: without it each page view calls Blob `list()`, which would hit the
   Vercel Hobby limit. Default content and types are in `src/lib/data/house.ts`.
+- **Routes:** guest pages are in `src/routes/(guest)/` (URLs unchanged). `/help` holds the FAQ and
+  host contact; the old `/faq` and `/contact` URLs redirect there.
 - **Access:** `src/lib/server/auth.ts`. `/essentials` is gated by `GUEST_CODE` and `/host/*` by
   `HOST_PASSWORD`, both through httpOnly cookies. Pages check in `load`
   (`guardGuestPage` / `guardHostPage`, plus the `host/(editor)/+layout.server.ts` guard). **Form

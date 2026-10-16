@@ -63,6 +63,7 @@ export const essentials = {
 		network: '[ADD: WiFi network name]',
 		password: '[ADD: WiFi password]'
 	},
+	checkInTime: '3:00 PM',
 	checkoutTime: '11:00 AM',
 	checkoutChecklist: [
 		'Leave used towels in the washer',

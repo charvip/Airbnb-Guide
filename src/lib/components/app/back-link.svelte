@@ -5,7 +5,7 @@
 	let { href = '/', label = 'Home' }: { href?: string; label?: string } = $props();
 </script>
 
-<Button {href} variant="link" class="mb-4 px-0">
-	<ArrowLeftIcon />
+<Button {href} variant="ghost" class="mb-3 -ml-3 text-muted-foreground">
+	<ArrowLeftIcon data-icon="inline-start" />
 	{label}
 </Button>

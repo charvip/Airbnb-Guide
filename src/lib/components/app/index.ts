@@ -2,19 +2,28 @@
 // shadcn-svelte primitives (#lib/components/ui) and design tokens
 // (#lib/styles/tokens.css). Pages import from here. See CLAUDE.md.
 
+// Surfaces and layout
+export { default as ListGroup } from './list-group.svelte';
+export { default as Panel } from './panel.svelte';
+export { default as TabBar } from './tab-bar.svelte';
+
 // Guest pages
 export { default as BackLink } from './back-link.svelte';
 export { default as CodeDisplay } from './code-display.svelte';
 export { default as ContactCta } from './contact-cta.svelte';
 export { default as Emoji } from './emoji.svelte';
+export { default as FeatureCard } from './feature-card.svelte';
 export { default as InfoList, type InfoItem } from './info-list.svelte';
-export { default as NavCard } from './nav-card.svelte';
+export { default as ListRow } from './list-row.svelte';
+export { default as NavTile } from './nav-tile.svelte';
 export { default as PageHeader } from './page-header.svelte';
 export { default as PasswordGate } from './password-gate.svelte';
 export { default as PhotoGallery } from './photo-gallery.svelte';
 export { default as SectionCard } from './section-card.svelte';
+export { default as StayTimes } from './stay-times.svelte';
 export { default as TextList } from './text-list.svelte';
 export { default as TourPager } from './tour-pager.svelte';
+export { default as WifiCard } from './wifi-card.svelte';
 
 // Host editor
 export { default as AddItemForm } from './add-item-form.svelte';
