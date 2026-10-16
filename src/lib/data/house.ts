@@ -1,7 +1,8 @@
 // Default guide content. This is the starting point the first time the site
 // runs; after that, hosts edit it from /host and the saved copy lives in
 // Vercel Blob (see src/lib/server/content.ts).
-// Anything wrapped in [ADD: ...] still needs the host's real details.
+// All of it is fictional demo content (Magic Mountain, the Riveras, codes, trails);
+// a real host replaces it from the host editor.
 
 export type Appliance = {
 	id: string;
@@ -53,7 +54,8 @@ export const host = {
 };
 
 export const essentials = {
-	parking: '[ADD: Where guests should park, e.g. driveway on the left, max 2 cars]',
+	parking:
+		'Park in the gravel driveway on the left side of the house. There is room for two cars; please keep the turnaround clear.',
 	// Demo code. Real codes should be entered through the host side, not committed here.
 	doorLock: {
 		code: '7381',
@@ -61,14 +63,16 @@ export const essentials = {
 			'Your code is active from 3:00 PM on your arrival day. Enter the code on the keypad, then turn the handle.'
 	},
 	wifi: {
-		network: '[ADD: WiFi network name]',
-		password: '[ADD: WiFi password]'
+		network: 'MagicMountain-Guest',
+		password: 'pinecone-sunrise-42'
 	},
 	checkInTime: '3:00 PM',
 	checkoutTime: '11:00 AM',
 	checkoutChecklist: [
 		'Leave used towels in the washer',
-		'[ADD: Any other checkout tasks, e.g. dishes in dishwasher, trash out, thermostat setting]',
+		'Load any dirty dishes into the dishwasher and start it',
+		'Take kitchen trash to the bins beside the garage',
+		'Close and latch the hot tub cover',
 		'Lock the door behind you'
 	],
 	quietHours: 'Quiet hours begin at 10:00 PM.'
@@ -141,7 +145,7 @@ export const appliances: Appliance[] = [
 		name: 'Washer & Dryer',
 		emoji: '🧺',
 		summary: 'Washer and dryer for your laundry.',
-		location: '[ADD: Where the washer and dryer are]',
+		location: 'Laundry closet at the end of the upstairs hallway',
 		suppliesLocation: 'Detergent pods are on the shelf above the washer.',
 		steps: [
 			'Use one pod from the shelf above.',
@@ -221,7 +225,8 @@ export const activities: Activity[] = [
 		emoji: '🥾',
 		summary: 'Get outside and explore the trails nearby.',
 		details: [
-			'[ADD: Nearby trail names, distance from the house, and difficulty]',
+			'Ridgeline Loop starts at the end of the driveway: 2.5 miles, moderate, with a lookout at the top.',
+			'Creekside Trail is a 10-minute drive away: 1.5 miles, flat and easy, good for kids.',
 			'Bring water and wear sturdy shoes.'
 		]
 	},
@@ -231,7 +236,8 @@ export const activities: Activity[] = [
 		emoji: '🔥',
 		summary: "Gather around the fire pit for s'mores and stories.",
 		details: [
-			'[ADD: Where the fire pit is and where firewood and lighters are kept]',
+			'The fire pit is on the stone patio behind the garden.',
+			'Firewood is stacked beside the shed; lighters and fire starters are in the bin by the back door.',
 			'Never leave the fire unattended.',
 			'Fully put out the fire with water before going inside.'
 		]
@@ -241,7 +247,10 @@ export const activities: Activity[] = [
 		name: 'Yoga',
 		emoji: '🧘',
 		summary: 'Start or end the day with a peaceful stretch.',
-		details: ['[ADD: Where yoga mats are kept and a good spot to practice]']
+		details: [
+			'Yoga mats and blocks are in the basket by the living room window.',
+			'The garden deck gets lovely morning sun, or use the living room on cooler days.'
+		]
 	},
 	{
 		id: 'board-games',
@@ -249,7 +258,7 @@ export const activities: Activity[] = [
 		emoji: '🎲',
 		summary: 'Settle in for a game night.',
 		details: [
-			'[ADD: Where the games are kept]',
+			'Games and puzzles are in the cabinet under the TV.',
 			"Please return all the pieces to their boxes when you're done."
 		]
 	},
@@ -278,15 +287,17 @@ export const faqs: Faq[] = [
 	},
 	{
 		question: 'Can I check in early or check out late?',
-		answer: '[ADD: Early check-in / late checkout policy]'
+		answer:
+			'Sometimes! Message us a day or two ahead and we will let you know if the schedule allows.'
 	},
 	{
 		question: 'Where do I put trash and recycling?',
-		answer: '[ADD: Trash and recycling location and pickup days]'
+		answer:
+			'Bins are beside the garage: green for trash, blue for recycling. No need to take them to the curb.'
 	},
 	{
 		question: 'Are pets allowed?',
-		answer: '[ADD: Pet policy]'
+		answer: 'Sorry, no pets at Magic Mountain. Service animals are always welcome.'
 	}
 ];
 
