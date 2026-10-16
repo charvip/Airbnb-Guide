@@ -39,7 +39,8 @@ export type Activity = {
 export type Faq = { question: string; answer: string };
 
 export const house = {
-	name: '[ADD: Property name]',
+	// Fictional demo name, so the public site doesn't identify the real property.
+	name: 'Magic Mountain',
 	welcome: "We're so glad you're here. Tap a section below to get settled in."
 };
 
