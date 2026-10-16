@@ -1,28 +1,19 @@
-# dependencies
-/node_modules
+node_modules
 
-# next.js
-/.next/
-/out/
-
-# production
+# Output
+.output
+.vercel
+/.svelte-kit
 /build
 
-# misc
+# OS
 .DS_Store
-*.pem
+Thumbs.db
 
-# debug
-npm-debug.log*
-
-# env files (guest passcode lives here locally, and in Vercel settings in production)
+# Env files (guest passcode lives here locally, and in Vercel settings in production)
 .env*
-
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
-
 !.env.example
+
+# Vite
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
